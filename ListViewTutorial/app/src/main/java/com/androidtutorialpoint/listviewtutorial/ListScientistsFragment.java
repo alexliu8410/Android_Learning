@@ -1,37 +1,29 @@
 package com.androidtutorialpoint.listviewtutorial;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.transition.Scene;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
-/**
- * Created by anonymous on 10/30/15.
- */
 public class ListScientistsFragment extends Fragment {
 
-    private final String TAG = "ListScientistFragment";
+    private final String TAG = "ListScientistsFragment";
 
-    private String[] scientistNames = {"Marie Curie","Thomas Edison","Albert Einstein","Michael Faraday","Galileo Galilei","Stephen Hawking","Johannes Kepler","Issac Newton","Nikola Tesla"};
+    private String[] scientistNames = {"Marie Curie","Thomas Edison","Albert Einstein","Michael Faraday","Galileo Galilei",
+            "Stephen Hawking","Johannes Kepler","Issac Newton","Nikola Tesla"};
     private String[] birthYear = {"1867","1847","1879","1791","1564","1942","1571","1643","1856"};
     private String[] deathYear = {"1934","1931","1955","1867","1642","Present","1630","1727","1943"};
-    private int[] image = {R.drawable.curie,R.drawable.edison,R.drawable.einstein,R.drawable.faraday,R.drawable.hawking,R.drawable.kepler,R.drawable.newton,R.drawable.tesla};
+    private int[] image = {R.drawable.curie,R.drawable.edison,R.drawable.einstein,R.drawable.faraday,R.drawable.galileo,R.drawable.hawking,R.drawable.kepler,R.drawable.newton,R.drawable.tesla};
 
     private ArrayList<Scientist> mScientists;
     private RecyclerView mScientistRecyclerView;
@@ -57,7 +49,8 @@ public class ListScientistsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState){
         Log.i("AndroidLearning","ListScientistsFragment--onCreateView");
         View view = inflater.inflate(R.layout.fragment_listscientists, container, false);
-        mScientistRecyclerView = (RecyclerView) view.findViewById(R.id.scientist_recycler_view);
+        mScientistRecyclerView = (RecyclerView) view
+                .findViewById(R.id.scientist_recycler_view);
         mScientistRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(getResources()));
         mScientistRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         updateUI();
@@ -67,7 +60,7 @@ public class ListScientistsFragment extends Fragment {
     private void updateUI(){
         Log.i("AndroidLearning","ListScientistsFragment--updateUI");
         mAdapter = new ScientistAdapter(mScientists);
-        mScientistRecyclerView.setLayoutManager(mAdapter);
+        mScientistRecyclerView.setAdapter(mAdapter);
     }
 
     private class ScientistHolder extends RecyclerView.ViewHolder{
@@ -77,7 +70,7 @@ public class ListScientistsFragment extends Fragment {
         public TextView mNameTextView;
         public TextView mBirthDeathTextView;
 
-        public ScientistHolder(View view){
+        public ScientistHolder(View itemView){
 
             super(itemView);
 
@@ -125,6 +118,7 @@ public class ListScientistsFragment extends Fragment {
             Log.i("AndroidLearning","ListScientistsFragment--ScientistAdapter--onBindViewHolder");
 
             Scientist s = mScientists.get(position);
+            holder.bindData(s);
         }
 
         @Override
