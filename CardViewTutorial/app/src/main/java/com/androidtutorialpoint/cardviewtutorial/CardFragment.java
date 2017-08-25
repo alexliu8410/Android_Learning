@@ -28,12 +28,12 @@ public class CardFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
-        initializedList();
+        initializeList();
         getActivity().setTitle("7 Wonders of the Modern World");
     }
 
     @Override
-    public View onCreatedView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_card, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.card_view);
         mRecyclerView.setHasFixedSize(true);
@@ -67,8 +67,18 @@ public class CardFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(final MyViewHolder holder){
+        public void onBindViewHolder(final MyViewHolder holder, int position){
 
+            holder.titleTextView.setText(listitems.get(position).getCardName());
+            holder.coverImageView.setImageResource(listitems.get(position).getImageResourceId());
+            holder.coverImageView.setTag(listitems.get(position).getImageResourceId());
+            holder.likeImageView.setTag(R.drawable.ic_like);
+
+        }
+
+        @Override
+        public int getItemCount(){
+            return mWonderModelArrayList.size();
         }
     }
 
@@ -121,8 +131,20 @@ public class CardFragment extends Fragment {
             });
         }
 
-        public void initializeList() {
 
+    }
+
+    public void initializeList() {
+        listitems.clear();
+
+        for(int i = 0; i < 7; i++){
+
+            WonderModel wonderModel = new WonderModel();
+            wonderModel.setCardName(Wonders[i]);
+            wonderModel.setImageResourceId(Images[i]);
+            wonderModel.setIsfav(0);
+            wonderModel.setIsturned(0);
+            listitems.add(wonderModel);
         }
     }
 
