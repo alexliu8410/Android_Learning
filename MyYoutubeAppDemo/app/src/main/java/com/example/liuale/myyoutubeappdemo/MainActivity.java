@@ -1,32 +1,34 @@
 package com.example.liuale.myyoutubeappdemo;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import com.google.android.youtube.player.YouTubeBaseActivity;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends YouTubeBaseActivity
 {
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private static Context context;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected void onCreate(Bundle saveInstanceState){
+        super.onCreate(saveInstanceState);
+        setContentView(R.layout.fragment_card);
+        mRecyclerView = (RecyclerView) findViewById(R.id.cardView);
+        mRecyclerView.setHasFixedSize(true);
+        MainActivity.context = getApplicationContext();
 
-        FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
+        LinearLayoutManager MyLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
-        if (fragment == null) {
-            fragment = new CardFragment();
-            ;
-            fm.beginTransaction()
-                    .add(R.id.fragmentContainer, fragment)
-                    .commit();
-
-
-        }
-
-
-
+        mAdapter = new MyAdapter(mRecyclerView);
     }
+
+    public static Context getContext(){
+        return context;
+    }
+
 }

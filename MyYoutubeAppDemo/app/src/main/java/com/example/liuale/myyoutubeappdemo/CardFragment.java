@@ -1,11 +1,8 @@
 package com.example.liuale.myyoutubeappdemo;
 
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
+import com.google.android.youtube.player.YouTubePlayerView;
 
 import java.util.ArrayList;
 
@@ -21,13 +20,13 @@ import java.util.ArrayList;
  * Created by liuale on 8/28/17.
  */
 
-public class CardFragment extends Fragment
+public class CardFragment extends YouTubePlayerSupportFragment
 {
 
     ArrayList<MyCard> listitems = new ArrayList<>();
     RecyclerView MyRecyclerView;
-    String Wonders[] = {"Chichen Itza","Christ the Redeemer","Great Wall of China","Machu Picchu","Petra","Taj Mahal","Colosseum"};
-    int  Images[] = {R.drawable.chichen_itza,R.drawable.christ_the_redeemer,R.drawable.great_wall_of_china,R.drawable.machu_picchu,R.drawable.petra,R.drawable.taj_mahal,R.drawable.colosseum};
+    public static final String API_KEY = "AIzaSyBfRPX7aDEOUqFuARP3uA0rtVsXYGvGFY8";
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,11 +77,8 @@ public class CardFragment extends Fragment
         @Override
         public void onBindViewHolder(final MyViewHolder holder, int position) {
 
-            holder.cardTitleTextView.setText(list.get(position).getCardName());
-            holder.titleTextView.setText(list.get(position).getCardName());
-            holder.dateTextView.setText("8/28");
-            holder.coverImageView.setImageResource(list.get(position).getImageResourceId());
-            holder.coverImageView.setTag(list.get(position).getImageResourceId());
+            holder.cardTitleTextView.setText(list.get(position).getTitle());
+            holder.dateTextView.setText(list.get(position).getDate());
             holder.likeImageView.setTag(R.drawable.ic_like);
 
         }
@@ -98,7 +94,7 @@ public class CardFragment extends Fragment
         public TextView cardTitleTextView;
         public TextView titleTextView;
         public TextView dateTextView;
-        public ImageView coverImageView;
+        public YouTubePlayerView youTubePlayerView;
         public ImageView likeImageView;
         public ImageView shareImageView;
 
@@ -107,7 +103,7 @@ public class CardFragment extends Fragment
             cardTitleTextView = (TextView) v.findViewById(R.id.cardTitleTextView);
             titleTextView = (TextView) v.findViewById(R.id.titleTextView);
             dateTextView = (TextView) v.findViewById(R.id.dateTextView);
-            coverImageView = (ImageView) v.findViewById(R.id.coverImageView);
+            youTubePlayerView = (YouTubePlayerView) v.findViewById(R.id.youtubeView);
             likeImageView = (ImageView) v.findViewById(R.id.likeImageView);
             shareImageView = (ImageView) v.findViewById(R.id.shareImageView);
             likeImageView.setOnClickListener(new View.OnClickListener() {
@@ -146,14 +142,14 @@ public class CardFragment extends Fragment
 
 
 
-                    Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
-                            "://" + getResources().getResourcePackageName(coverImageView.getId())
-                            + '/' + "drawable" + '/' + getResources().getResourceEntryName((int)coverImageView.getTag()));
+//                    Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
+//                            "://" + getResources().getResourcePackageName(coverImageView.getId())
+//                            + '/' + "drawable" + '/' + getResources().getResourceEntryName((int)coverImageView.getTag()));
 
 
                     Intent shareIntent = new Intent();
                     shareIntent.setAction(Intent.ACTION_SEND);
-                    shareIntent.putExtra(Intent.EXTRA_STREAM,imageUri);
+                    //shareIntent.putExtra(Intent.EXTRA_STREAM,imageUri);
                     shareIntent.setType("image/jpeg");
                     startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
 
@@ -168,19 +164,19 @@ public class CardFragment extends Fragment
     }
 
     public void initializeList() {
-        listitems.clear();
-
-        for(int i =0;i<7;i++){
 
 
-            MyCard item = new MyCard();
-            item.setCardName(Wonders[i]);
-            item.setImageResourceId(Images[i]);
-            item.setIsfav(0);
-            item.setIsturned(0);
-            listitems.add(item);
-
-        }
+//        for(int i =0;i<7;i++){
+//
+//
+//            MyCard item = new MyCard();
+//            item.setCardName(Wonders[i]);
+//            item.setImageResourceId(Images[i]);
+//            item.setIsfav(0);
+//            item.setIsturned(0);
+//            listitems.add(item);
+//
+//        }
 
 
 

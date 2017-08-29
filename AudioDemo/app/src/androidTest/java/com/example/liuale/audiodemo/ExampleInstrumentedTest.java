@@ -1,4 +1,4 @@
-package com.example.liuale.myyoutubeappdemo;
+package com.example.liuale.audiodemo;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -23,6 +23,6 @@ public class ExampleInstrumentedTest
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.liuale.myyoutubeappdemo", appContext.getPackageName());
+        assertEquals("com.example.liuale.audiodemo", appContext.getPackageName());
     }
 }

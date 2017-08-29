@@ -7,40 +7,31 @@ package com.example.liuale.myyoutubeappdemo;
 public class MyCard
 {
 
-    String cardName;
-    int imageResourceId;
-    int isfav;
-    int isturned;
+    protected String title;
+    protected String date;
+    protected String videoId;
+    protected String videoUrl;
 
-    public int getIsturned() {
-        return isturned;
+    public MyCard(String title, String date, String videoId, String videoUrl){
+        this.title = title;
+        this.date = date;
+        this.videoId = videoId;
+        this.videoUrl = videoUrl;
     }
 
-    public void setIsturned(int isturned) {
-        this.isturned = isturned;
+    public String getTitle(){
+        return title;
     }
 
-    public int getIsfav() {
-        return isfav;
+    public String getDate(){
+        return date;
     }
 
-    public void setIsfav(int isfav) {
-        this.isfav = isfav;
+    public String getVideoId(){
+        return videoId;
     }
 
-    public String getCardName() {
-        return cardName;
-    }
-
-    public void setCardName(String cardName) {
-        this.cardName = cardName;
-    }
-
-    public int getImageResourceId() {
-        return imageResourceId;
-    }
-
-    public void setImageResourceId(int imageResourceId) {
-        this.imageResourceId = imageResourceId;
+    public String getVideoUrl(){
+        return videoUrl;
     }
 }
