@@ -21,7 +21,7 @@ public class MainActivity extends YouTubeBaseActivity
         mRecyclerView.setHasFixedSize(true);
         MainActivity.context = getApplicationContext();
 
-        LinearLayoutManager MyLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mAdapter = new MyAdapter(mRecyclerView);

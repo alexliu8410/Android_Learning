@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface YouTubeDataListener
 {
-     void responseRecieved(List<MyCard> youTubeDataList);
+     void responseReceived(List<MyCard> youTubeDataList);
 }

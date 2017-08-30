@@ -1,9 +1,11 @@
 package com.androidtutorialpoint.cardviewtutorial;
 
-import android.content.ContentResolver;
+        import android.annotation.TargetApi;
+        import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
+        import android.os.Build;
+        import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,135 +20,178 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
+
 public class CardFragment extends Fragment {
 
+    public static final int GONE = 0x00000008;
+    public static final int VISIBLE = 0x00000000;
+
     ArrayList<WonderModel> listitems = new ArrayList<>();
-    RecyclerView mRecyclerView;
+    RecyclerView MyRecyclerView;
     String Wonders[] = {"Chichen Itza","Christ the Redeemer","Great Wall of China","Machu Picchu","Petra","Taj Mahal","Colosseum"};
     int  Images[] = {R.drawable.chichen_itza,R.drawable.christ_the_redeemer,R.drawable.great_wall_of_china,R.drawable.machu_picchu,R.drawable.petra,R.drawable.taj_mahal,R.drawable.colosseum};
 
     @Override
-    public void onCreate(@Nullable Bundle saveInstanceState){
-        super.onCreate(saveInstanceState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         initializeList();
         getActivity().setTitle("7 Wonders of the Modern World");
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_card, container, false);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.card_view);
-        mRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        if(listitems.size() > 0 & mRecyclerView != null){
-            mRecyclerView.setAdapter(new MyAdapter(listitems));
+        MyRecyclerView = (RecyclerView) view.findViewById(R.id.cardView);
+        MyRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager MyLayoutManager = new LinearLayoutManager(getActivity());
+        MyLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        if (listitems.size() > 0 & MyRecyclerView != null) {
+            MyRecyclerView.setAdapter(new MyAdapter(listitems));
         }
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        MyRecyclerView.setLayoutManager(MyLayoutManager);
 
         return view;
     }
 
     @Override
-    public void onActivityCreated(Bundle saveInstanceState){
-        super.onActivityCreated(saveInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
     }
 
-    private class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
-        private ArrayList<WonderModel> mWonderModelArrayList;
+    public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
+        private ArrayList<WonderModel> list;
 
-        public MyAdapter(ArrayList<WonderModel> Data){
-            mWonderModelArrayList = Data;
+        public MyAdapter(ArrayList<WonderModel> Data) {
+            list = Data;
         }
 
         @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_items,parent,false);
+        public MyViewHolder onCreateViewHolder(ViewGroup parent,int viewType) {
+            // create a new view
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.recycle_items, parent, false);
             MyViewHolder holder = new MyViewHolder(view);
             return holder;
         }
 
         @Override
-        public void onBindViewHolder(final MyViewHolder holder, int position){
+        public void onBindViewHolder(final MyViewHolder holder, int position) {
 
-            holder.titleTextView.setText(listitems.get(position).getCardName());
-            holder.coverImageView.setImageResource(listitems.get(position).getImageResourceId());
-            holder.coverImageView.setTag(listitems.get(position).getImageResourceId());
+            holder.titleTextView.setText(list.get(position).getCardName());
+            holder.coverImageView.setImageResource(list.get(position).getImageResourceId());
+            holder.coverImageView.setTag(list.get(position).getImageResourceId());
             holder.likeImageView.setTag(R.drawable.ic_like);
 
         }
 
-        @Override
-        public int getItemCount(){
-            return mWonderModelArrayList.size();
+       @Override
+        public int getItemCount() {
+            return list.size();
         }
     }
 
-    private class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+
         public TextView titleTextView;
         public ImageView coverImageView;
         public ImageView likeImageView;
         public ImageView shareImageView;
 
-        public MyViewHolder(View view){
-            super(view);
-            titleTextView = (TextView) view.findViewById(R.id.titleTextView);
-            coverImageView = (ImageView) view.findViewById(R.id.coverImageView);
-            likeImageView = (ImageView) view.findViewById(R.id.likeImageView);
-            shareImageView = (ImageView) view.findViewById(R.id.shareImageView);
+        public MyViewHolder(View v) {
+            super(v);
+            titleTextView = (TextView) v.findViewById(R.id.titleTextView);
+            coverImageView = (ImageView) v.findViewById(R.id.coverImageView);
+            likeImageView = (ImageView) v.findViewById(R.id.likeImageView);
+            shareImageView = (ImageView) v.findViewById(R.id.shareImageView);
 
-            likeImageView.setOnClickListener(new View.OnClickListener(){
+            coverImageView.setOnClickListener(new View.OnClickListener(){
+                @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                 @Override
                 public void onClick(View view){
-
-                    int id = (int)likeImageView.getTag();
-                    if(id == R.drawable.ic_like){
-
-                        likeImageView.setTag(R.drawable.ic_liked);
-                        likeImageView.setImageResource(R.drawable.ic_liked);
-
-                        Toast.makeText(getActivity(),titleTextView.getText()+" add to favourites",Toast.LENGTH_SHORT).show();
-                    } else {
-                        likeImageView.setTag(R.drawable.ic_like);
-                        likeImageView.setImageResource(R.drawable.ic_like);
-                        Toast.makeText(getActivity(),titleTextView.getText()+" removed from favourites",Toast.LENGTH_SHORT).show();
-                    }
+                    coverImageView.setVisibility(View.GONE);
+                    titleTextView.setVisibility(View.GONE);
                 }
             });
 
-            shareImageView.setOnClickListener(new View.OnClickListener(){
+
+
+            likeImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view){
+                public void onClick(View v) {
+
+
+                    int id = (int)likeImageView.getTag();
+                        if( id == R.drawable.ic_like){
+
+                            likeImageView.setTag(R.drawable.ic_liked);
+                            likeImageView.setImageResource(R.drawable.ic_liked);
+
+                            Toast.makeText(getActivity(),titleTextView.getText()+" added to favourites",Toast.LENGTH_SHORT).show();
+
+                        }else{
+
+                            likeImageView.setTag(R.drawable.ic_like);
+                            likeImageView.setImageResource(R.drawable.ic_like);
+                            Toast.makeText(getActivity(),titleTextView.getText()+" removed from favourites",Toast.LENGTH_SHORT).show();
+
+
+                        }
+
+                }
+            });
+
+
+
+            shareImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+
+
+
 
                     Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
                             "://" + getResources().getResourcePackageName(coverImageView.getId())
                             + '/' + "drawable" + '/' + getResources().getResourceEntryName((int)coverImageView.getTag()));
 
+
                     Intent shareIntent = new Intent();
                     shareIntent.setAction(Intent.ACTION_SEND);
                     shareIntent.putExtra(Intent.EXTRA_STREAM,imageUri);
                     shareIntent.setType("image/jpeg");
-                    startActivity(Intent.createChooser(shareIntent,"Share"));
+                    startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
+
+
+
                 }
             });
+
+
+
         }
-
-
     }
 
     public void initializeList() {
         listitems.clear();
 
-        for(int i = 0; i < 7; i++){
+        for(int i =0;i<7;i++){
 
-            WonderModel wonderModel = new WonderModel();
-            wonderModel.setCardName(Wonders[i]);
-            wonderModel.setImageResourceId(Images[i]);
-            wonderModel.setIsfav(0);
-            wonderModel.setIsturned(0);
-            listitems.add(wonderModel);
+
+            WonderModel item = new WonderModel();
+            item.setCardName(Wonders[i]);
+            item.setImageResourceId(Images[i]);
+            item.setIsfav(0);
+            item.setIsturned(0);
+            listitems.add(item);
+
         }
+
+
+
+
     }
-
-
 }

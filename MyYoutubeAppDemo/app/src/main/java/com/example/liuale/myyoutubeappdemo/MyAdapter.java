@@ -1,6 +1,7 @@
 package com.example.liuale.myyoutubeappdemo;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,8 +52,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     }
 
     @Override
-    public void responseRecieved(List<MyCard> mYoutubeCards){
+    public void responseReceived(List<MyCard> mYoutubeCards){
         this.mYoutubeCards = mYoutubeCards;
+        Log.i("AlexLearning","responseReceived is called");
+        mRecyclerView.setAdapter(this);
 
     }
 
