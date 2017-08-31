@@ -1,11 +1,9 @@
 package com.example.liuale.myyoutubeappdemo;
 
-import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,13 +17,16 @@ import android.widget.Toast;
 public class MyViewHolder extends RecyclerView.ViewHolder {
 
     public TextView titleTextView;
+    public TextView dateTextView;
     public ImageView coverImageView;
     public ImageView likeImageView;
     public ImageView shareImageView;
+    private String videoId;
 
     public MyViewHolder(View v) {
         super(v);
         titleTextView = (TextView) v.findViewById(R.id.titleTextView);
+        dateTextView = (TextView) v.findViewById(R.id.dataTextView);
         coverImageView = (ImageView) v.findViewById(R.id.coverImageView);
         likeImageView = (ImageView) v.findViewById(R.id.likeImageView);
         shareImageView = (ImageView) v.findViewById(R.id.shareImageView);
@@ -33,11 +34,11 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         final Context context = MainActivity.getAppContext();
 
         coverImageView.setOnClickListener(new View.OnClickListener(){
-            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+
             @Override
             public void onClick(View view){
-                coverImageView.setVisibility(View.GONE);
-                titleTextView.setVisibility(View.GONE);
+                Intent intent = new Intent(MainActivity.getAppContext(), YouTubePlayActivity.class);
+                MainActivity.getAppContext().startActivity(intent);
             }
         });
 
@@ -85,8 +86,13 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
 
             }
         });
+    }
 
+    public void setVideoId(String Id){
+        this.videoId = Id;
+    }
 
-
+    public String getVideoId(){
+        return videoId;
     }
 }

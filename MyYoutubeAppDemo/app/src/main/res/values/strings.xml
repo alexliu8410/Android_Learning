@@ -4,5 +4,6 @@
     <string name="player_error">Error initializing Youtube player:%s</string>
     <string name="seek_to">Jumpt To</string>
     <string name="seek_to_hint">Seconds</string>
+    <string name="YoutubePlayer">YoutubePlayer</string>
 
 </resources>

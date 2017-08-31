@@ -31,6 +31,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     public void onBindViewHolder(final MyViewHolder holder, int position) {
 
         holder.titleTextView.setText(list.get(position).getCardName());
+        holder.dateTextView.setText("08/30/2017");
         holder.coverImageView.setImageResource(list.get(position).getImageResourceId());
         holder.coverImageView.setTag(list.get(position).getImageResourceId());
         holder.likeImageView.setTag(R.drawable.ic_like);
