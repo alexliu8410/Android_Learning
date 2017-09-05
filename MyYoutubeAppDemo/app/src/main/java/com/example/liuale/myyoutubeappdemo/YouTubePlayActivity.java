@@ -2,6 +2,7 @@ package com.example.liuale.myyoutubeappdemo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -14,7 +15,8 @@ import com.google.android.youtube.player.YouTubePlayerView;
 public class YouTubePlayActivity extends YouTubeBaseActivity
 {
     public static final String DEVELOPER_KEY = "AIzaSyD1MYeUEVB1nMuqNt7BmjXx5RvggMpJGMc";
-    private static final String VIDEO_ID = "srH-2pQdKhg";
+    public static final String INTENT_VIDEO_ID = "videoId";
+    public static String videoId = null;
     private static final int RECOVERY_DIALOG_REQUEST = 1;
 
     private YouTubePlayerView mYouTubePlayerView;
@@ -26,16 +28,19 @@ public class YouTubePlayActivity extends YouTubeBaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.youtubeplayer);
 
+        Intent intent = getIntent();
+        videoId = intent.getStringExtra(INTENT_VIDEO_ID);
+
         mYouTubePlayerView = (YouTubePlayerView) findViewById(R.id.youtube_view);
         mOnInitializedListener = new YouTubePlayer.OnInitializedListener(){
             @Override
             public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult errReason){
-                System.out.print("Error in getting Resource");
+                Log.i("AlexDebugging","YouTubePlayer initialized failed");
             }
 
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player, boolean wasRestored){
-                player.loadVideo(VIDEO_ID);
+                player.loadVideo(videoId);
             }
         };
         mYouTubePlayerView.initialize(DEVELOPER_KEY,mOnInitializedListener);

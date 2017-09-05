@@ -3,10 +3,10 @@ package com.example.liuale.myyoutubeappdemo;
 import java.util.List;
 
 /**
- * Created by liuale on 8/31/17.
+ * Created by liuale on 9/5/17.
  */
 
 public interface YoutubeDataListener
 {
-    void getNotified(List<YoutubeVideoItem> youtubeVideoList);
+    void dataRecieved(List<YoutubeVideoItem> youTubeDataList);
 }
