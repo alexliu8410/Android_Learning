@@ -67,16 +67,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         mRecyclerView.setAdapter(this);
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView titleTextView;
-        public TextView dateTextView;
-        public ImageView coverImageView;
-        public ImageView likeImageView;
-        public ImageView shareImageView;
+        private TextView titleTextView;
+        private TextView dateTextView;
+        private ImageView coverImageView;
+        private ImageView likeImageView;
+        private ImageView shareImageView;
         private String videoId;
 
-        public MyViewHolder(View v) {
+        private MyViewHolder(View v) {
             super(v);
             titleTextView = (TextView) v.findViewById(R.id.titleTextView);
             dateTextView = (TextView) v.findViewById(R.id.dataTextView);
