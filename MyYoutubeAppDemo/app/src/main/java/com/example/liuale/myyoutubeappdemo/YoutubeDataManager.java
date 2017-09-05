@@ -24,7 +24,7 @@ import java.util.List;
 
 public class YoutubeDataManager
 {
-    private static final long NUMBER_OF_VIDEOS_RETURNED = 18;
+    private static final long Return_Item_NUMBER = 18;
     private static YouTube youtubeData;
     private static final String CHANNEL_ID = "UCJX2nUYKjeq3S7ZoqzSyooA";
     private static YouTube.Search.List searchList;
@@ -43,7 +43,6 @@ public class YoutubeDataManager
             }
         };
 
-
         try {
             this.mListener = mListener;
             youtubeData = new YouTube.Builder(netHttpTransport, jacksonFactory, httpRequestInitializer).setApplicationName("youtube-data-api").build();
@@ -59,7 +58,7 @@ public class YoutubeDataManager
             searchList.setType("video");
             searchList.setOrder("date");
             searchList.setFields("items(id/videoId,snippet/title,snippet/publishedAt,snippet/thumbnails/medium/url)");
-            searchList.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
+            searchList.setMaxResults(Return_Item_NUMBER);
         } catch (GoogleJsonResponseException e) {
             System.err.println("Service error: " + e.getDetails().getCode() + " : "
                     + e.getDetails().getMessage());

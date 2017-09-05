@@ -35,6 +35,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     }
 
     @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        // create a new view
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_items, parent, false);
+        MyViewHolder mViewHolder = new MyViewHolder(view);
+        return mViewHolder;
+    }
+
+    @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         holder.titleTextView.setText(mYoutubeVideoItemList.get(position).getVideoTitle());
         holder.dateTextView.setText(mYoutubeVideoItemList.get(position).getReleaseDate());
@@ -45,18 +53,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // create a new view
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_items, parent, false);
-        MyViewHolder mViewHolder = new MyViewHolder(view);
-        return mViewHolder;
-    }
-
-
-    @Override
     public int getItemCount() {
         Log.i("AlexDebugging","I get the searchResults " + mYoutubeVideoItemList.size());
-
         return mYoutubeVideoItemList.size();
     }
 
@@ -87,7 +85,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
             final Context context = MainActivity.getAppContext();
 
             coverImageView.setOnClickListener(new View.OnClickListener(){
-
                 @Override
                 public void onClick(View view){
                     Intent intent = new Intent(MainActivity.getAppContext(), YouTubePlayActivity.class);
@@ -102,11 +99,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                 public void onClick(View v) {
 
                     int id = (int)likeImageView.getTag();
+
                     if( id == R.drawable.ic_like){
 
                         likeImageView.setTag(R.drawable.ic_liked);
                         likeImageView.setImageResource(R.drawable.ic_liked);
-
                         Toast.makeText(MainActivity.getAppContext(),titleTextView.getText()+" added to favourites",Toast.LENGTH_SHORT).show();
 
                     }else{
@@ -115,13 +112,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                         likeImageView.setImageResource(R.drawable.ic_like);
                         Toast.makeText(MainActivity.getAppContext(),titleTextView.getText()+" removed from favourites",Toast.LENGTH_SHORT).show();
 
-
                     }
 
                 }
             });
-
-
 
             shareImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -131,13 +125,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                             "://" + context.getResources().getResourcePackageName(shareImageView.getId())
                             + '/' + "drawable" + '/' + context.getResources().getResourceEntryName((int)shareImageView.getTag()));
 
-
                     Intent shareIntent = new Intent();
                     shareIntent.setAction(Intent.ACTION_SEND);
                     shareIntent.putExtra(Intent.EXTRA_STREAM,imageUri);
                     shareIntent.setType("image/jpeg");
                     context.startActivity(Intent.createChooser(shareIntent, context.getResources().getText(R.string.send_to)));
-
                 }
             });
         }

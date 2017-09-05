@@ -29,7 +29,6 @@ public class MainActivity extends YouTubeBaseActivity
         MyRecyclerView.setHasFixedSize(true);
 
         MyLinearLayoutManager = new LinearLayoutManager(this);
-//        MyLinearLayoutManager.setOrientation(LinearLayout.VERTICAL);
 
         MyRecyclerView.setLayoutManager(MyLinearLayoutManager);
 
