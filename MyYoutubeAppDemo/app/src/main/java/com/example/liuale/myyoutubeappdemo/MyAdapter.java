@@ -128,8 +128,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                 public void onClick(View v) {
 
                     Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
-                            "://" + context.getResources().getResourcePackageName(coverImageView.getId())
-                            + '/' + "drawable" + '/' + context.getResources().getResourceEntryName((int)coverImageView.getTag()));
+                            "://" + context.getResources().getResourcePackageName(shareImageView.getId())
+                            + '/' + "drawable" + '/' + context.getResources().getResourceEntryName((int)shareImageView.getTag()));
 
 
                     Intent shareIntent = new Intent();
