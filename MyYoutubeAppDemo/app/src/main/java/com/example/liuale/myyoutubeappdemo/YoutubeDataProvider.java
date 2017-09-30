@@ -22,15 +22,15 @@ import java.util.List;
  * Created by liuale on 8/30/17.
  */
 
-public class YoutubeDataManager
+public class YoutubeDataProvider
 {
     private static final long Return_Item_NUMBER = 18;
     private static YouTube youtubeData;
-    private static final String CHANNEL_ID = "UCJX2nUYKjeq3S7ZoqzSyooA";
+    private static String CHANNEL_ID = "UCJX2nUYKjeq3S7ZoqzSyooA";
     private static YouTube.Search.List searchList;
     private YoutubeDataListener mListener;
 
-    public YoutubeDataManager(YoutubeDataListener mListener){
+    public YoutubeDataProvider(YoutubeDataListener mListener){
 
         NetHttpTransport netHttpTransport = new NetHttpTransport();
         JacksonFactory jacksonFactory = new JacksonFactory();
@@ -70,7 +70,11 @@ public class YoutubeDataManager
     }
 
     public static YouTube.Search.List getSearchList(){
-        return YoutubeDataManager.searchList;
+        return YoutubeDataProvider.searchList;
+    }
+
+    public static void setChannelId(String channelId){
+        CHANNEL_ID = channelId;
     }
 
     public void getData() {
